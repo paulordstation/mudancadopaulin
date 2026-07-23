@@ -1,32 +1,42 @@
-# React + TypeScript + Vite
+# NovaRota — Checklist de Mudança
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+App de checklist para organizar uma mudança: viagem, gastos fixos mensais e itens da casa nova. Dark mode, detalhes em roxo neon, animações com Framer Motion, dados persistidos no Supabase.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React + TypeScript + Vite
+- Supabase (Postgres) para persistência
+- Framer Motion (animações) e Lucide Icons (ícones vetorizados)
 
-## React Compiler
+## Rodando localmente
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Precisa de um arquivo `.env.local` na raiz (veja `.env.example`):
+
+```
+VITE_SUPABASE_URL=https://seu-projeto.supabase.co
+VITE_SUPABASE_ANON_KEY=sua-anon-key
+```
+
+Esse arquivo é ignorado pelo Git — cada máquina/deploy configura o seu.
+
+## Banco de dados
+
+O schema (tabela `checklist_items`, políticas de acesso e itens iniciais) está em [supabase/schema.sql](supabase/schema.sql). Rode esse script uma vez no SQL Editor do seu projeto Supabase antes de usar o app.
+
+A tabela não tem autenticação — a chave `anon` tem CRUD liberado via RLS. Nunca use as chaves `service_role`/`secret` no frontend.
+
+## Deploy
+
+Deploy feito na [Vercel](https://vercel.com), importando este repositório do GitHub. A Vercel detecta o build do Vite automaticamente (`vite build` → `dist/`). É preciso configurar as mesmas duas variáveis de ambiente (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) nas Environment Variables do projeto na Vercel.
+
+## Scripts
+
+- `npm run dev` — servidor de desenvolvimento
+- `npm run build` — checagem de tipos + build de produção
+- `npm run lint` — Oxlint
+- `npm run preview` — serve o build de produção localmente
