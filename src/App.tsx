@@ -1,10 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Logo } from './components/Logo';
 import { TopNav } from './components/TopNav';
 import { SectionView } from './components/SectionView';
 import { useChecklistItems } from './hooks/useChecklistItems';
-import { formatCurrency } from './utils/format';
 import type { SectionKey } from './types';
 
 const SECTIONS: { key: SectionKey; title: string; subtitle?: string }[] = [
@@ -16,13 +15,8 @@ const SECTIONS: { key: SectionKey; title: string; subtitle?: string }[] = [
 
 function App() {
   const [active, setActive] = useState<SectionKey>('viagem');
-  const { loading, error, items, toggleChecked, updateValue, addItem, deleteItem, itemsBySection } =
+  const { loading, error, toggleChecked, updateValue, addItem, deleteItem, itemsBySection } =
     useChecklistItems();
-
-  const grandTotal = useMemo(
-    () => items.reduce((sum, item) => sum + item.estimated_value, 0),
-    [items]
-  );
 
   const activeMeta = SECTIONS.find((s) => s.key === active)!;
 
@@ -30,10 +24,6 @@ function App() {
     <div className="app-shell">
       <header className="topbar">
         <Logo />
-        <div className="grand-total">
-          <span className="grand-total-label">Total geral estimado</span>
-          <span className="grand-total-value">{formatCurrency(grandTotal)}</span>
-        </div>
       </header>
 
       <TopNav active={active} onChange={setActive} />

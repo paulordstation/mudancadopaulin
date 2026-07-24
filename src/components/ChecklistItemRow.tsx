@@ -55,7 +55,7 @@ export function ChecklistItemRow({
           <motion.span
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 18 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 24 }}
           >
             <Check size={14} strokeWidth={3} />
           </motion.span>

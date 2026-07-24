@@ -7,8 +7,8 @@ export function Logo({ size = 26 }: { size?: number }) {
       <span className="logo-icon-wrap">
         <motion.span
           className="logo-icon"
-          animate={{ y: [0, -3, 0], rotate: [-4, 4, -4] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+          animate={{ y: [0, -2, 0], rotate: [-2, 2, -2] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         >
           <Plane size={size} strokeWidth={1.75} />
         </motion.span>
