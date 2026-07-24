@@ -7,12 +7,19 @@ import { formatCurrency } from '../utils/format';
 
 interface ChecklistItemRowProps {
   item: ChecklistItem;
+  showValue?: boolean;
   onToggle: (id: string, checked: boolean) => void;
   onUpdateValue: (id: string, value: number) => void;
   onDelete: (id: string) => void;
 }
 
-export function ChecklistItemRow({ item, onToggle, onUpdateValue, onDelete }: ChecklistItemRowProps) {
+export function ChecklistItemRow({
+  item,
+  showValue = true,
+  onToggle,
+  onUpdateValue,
+  onDelete,
+}: ChecklistItemRowProps) {
   const [editingValue, setEditingValue] = useState(false);
   const [draftValue, setDraftValue] = useState(String(item.estimated_value));
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -29,7 +36,7 @@ export function ChecklistItemRow({ item, onToggle, onUpdateValue, onDelete }: Ch
 
   return (
     <motion.li
-      className={`item-row ${item.is_checked ? 'is-checked' : ''}`}
+      className={`item-row ${item.is_checked ? 'is-checked' : ''} ${showValue ? '' : 'no-value'}`}
       layout
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
@@ -74,36 +81,37 @@ export function ChecklistItemRow({ item, onToggle, onUpdateValue, onDelete }: Ch
         <span className="item-category">{item.category}</span>
       </div>
 
-      {editingValue ? (
-        <input
-          className="value-input"
-          type="text"
-          inputMode="decimal"
-          autoFocus
-          value={draftValue}
-          onChange={(e) => setDraftValue(e.target.value)}
-          onFocus={(e) => e.target.select()}
-          onBlur={commitValue}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') commitValue();
-            if (e.key === 'Escape') {
+      {showValue &&
+        (editingValue ? (
+          <input
+            className="value-input"
+            type="text"
+            inputMode="decimal"
+            autoFocus
+            value={draftValue}
+            onChange={(e) => setDraftValue(e.target.value)}
+            onFocus={(e) => e.target.select()}
+            onBlur={commitValue}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') commitValue();
+              if (e.key === 'Escape') {
+                setDraftValue(String(item.estimated_value));
+                setEditingValue(false);
+              }
+            }}
+          />
+        ) : (
+          <button
+            type="button"
+            className="value-display"
+            onClick={() => {
               setDraftValue(String(item.estimated_value));
-              setEditingValue(false);
-            }
-          }}
-        />
-      ) : (
-        <button
-          type="button"
-          className="value-display"
-          onClick={() => {
-            setDraftValue(String(item.estimated_value));
-            setEditingValue(true);
-          }}
-        >
-          {formatCurrency(item.estimated_value)}
-        </button>
-      )}
+              setEditingValue(true);
+            }}
+          >
+            {formatCurrency(item.estimated_value)}
+          </button>
+        ))}
 
       <button
         type="button"

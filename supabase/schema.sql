@@ -5,7 +5,7 @@ create extension if not exists "pgcrypto";
 
 create table if not exists checklist_items (
   id uuid primary key default gen_random_uuid(),
-  section text not null check (section in ('viagem', 'gastos_fixos', 'casa')),
+  section text not null check (section in ('viagem', 'gastos_fixos', 'casa', 'documentacao')),
   category text not null,
   name text not null,
   estimated_value numeric(12,2) not null default 0,
@@ -79,11 +79,11 @@ insert into checklist_items (section, category, name, estimated_value) values
 ('casa', 'Quarto / Diversos', 'Luminárias', 200),
 ('casa', 'Quarto / Diversos', 'Cabides', 75),
 
--- Checklist da casa — Documentação (sem custo, apenas tarefas)
-('casa', 'Documentação', 'CNH — atualizar endereço', 0),
-('casa', 'Documentação', 'Título de eleitor — transferência de domicílio', 0),
-('casa', 'Documentação', 'Banco — atualizar endereço', 0),
-('casa', 'Documentação', 'Contrato de aluguel assinado', 0),
-('casa', 'Documentação', 'Vistoria de entrada', 0),
-('casa', 'Documentação', 'Internet — agendar instalação', 0),
-('casa', 'Documentação', 'Plano de saúde — transferir/contratar', 0);
+-- Documentação (aba própria, sem valores/custo — apenas tarefas)
+('documentacao', 'Documentação', 'CNH — atualizar endereço', 0),
+('documentacao', 'Documentação', 'Título de eleitor — transferência de domicílio', 0),
+('documentacao', 'Documentação', 'Banco — atualizar endereço', 0),
+('documentacao', 'Documentação', 'Contrato de aluguel assinado', 0),
+('documentacao', 'Documentação', 'Vistoria de entrada', 0),
+('documentacao', 'Documentação', 'Internet — agendar instalação', 0),
+('documentacao', 'Documentação', 'Plano de saúde — transferir/contratar', 0);

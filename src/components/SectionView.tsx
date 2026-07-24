@@ -26,6 +26,7 @@ export function SectionView({
   onDelete,
   onAdd,
 }: SectionViewProps) {
+  const showValue = sectionKey !== 'documentacao';
   const total = items.reduce((sum, item) => sum + item.estimated_value, 0);
   const checkedCount = items.filter((item) => item.is_checked).length;
   const percent = items.length ? (checkedCount / items.length) * 100 : 0;
@@ -38,7 +39,7 @@ export function SectionView({
 
   return (
     <motion.section
-      className="section-view"
+      className={`section-view accent-${sectionKey}`}
       initial={{ opacity: 0, x: 16 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -16 }}
@@ -49,10 +50,12 @@ export function SectionView({
           <h2>{title}</h2>
           {subtitle && <p className="section-subtitle">{subtitle}</p>}
         </div>
-        <div className="section-total">
-          <span className="section-total-label">Total da seção</span>
-          <span className="section-total-value">{formatCurrency(total)}</span>
-        </div>
+        {showValue && (
+          <div className="section-total">
+            <span className="section-total-label">Total da seção</span>
+            <span className="section-total-value">{formatCurrency(total)}</span>
+          </div>
+        )}
       </header>
 
       <div className="section-progress">
@@ -71,6 +74,7 @@ export function SectionView({
                 <ChecklistItemRow
                   key={item.id}
                   item={item}
+                  showValue={showValue}
                   onToggle={onToggle}
                   onUpdateValue={onUpdateValue}
                   onDelete={onDelete}
@@ -84,6 +88,7 @@ export function SectionView({
       <AddItemForm
         section={sectionKey}
         categories={categories.length ? categories : ['Geral']}
+        showValue={showValue}
         onAdd={onAdd}
       />
     </motion.section>

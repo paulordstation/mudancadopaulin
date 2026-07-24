@@ -6,12 +6,13 @@ import type { NewChecklistItem, SectionKey } from '../types';
 interface AddItemFormProps {
   section: SectionKey;
   categories: string[];
+  showValue?: boolean;
   onAdd: (item: NewChecklistItem) => Promise<void> | void;
 }
 
 const CUSTOM_CATEGORY = '__custom__';
 
-export function AddItemForm({ section, categories, onAdd }: AddItemFormProps) {
+export function AddItemForm({ section, categories, showValue = true, onAdd }: AddItemFormProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [value, setValue] = useState('');
@@ -62,19 +63,21 @@ export function AddItemForm({ section, categories, onAdd }: AddItemFormProps) {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
           >
-            <div className="add-item-fields">
+            <div className={`add-item-fields ${showValue ? '' : 'no-value'}`}>
               <input
                 placeholder="Nome do item"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
-              <input
-                placeholder="Valor (R$)"
-                inputMode="decimal"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-              />
+              {showValue && (
+                <input
+                  placeholder="Valor (R$)"
+                  inputMode="decimal"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                />
+              )}
               <select value={category} onChange={(e) => setCategory(e.target.value)}>
                 {categories.map((c) => (
                   <option key={c} value={c}>

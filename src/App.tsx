@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Logo } from './components/Logo';
-import { Sidebar } from './components/Sidebar';
+import { TopNav } from './components/TopNav';
 import { SectionView } from './components/SectionView';
 import { useChecklistItems } from './hooks/useChecklistItems';
 import { formatCurrency } from './utils/format';
@@ -11,6 +11,7 @@ const SECTIONS: { key: SectionKey; title: string; subtitle?: string }[] = [
   { key: 'viagem', title: 'Viagem', subtitle: '04/10' },
   { key: 'gastos_fixos', title: 'Gastos Fixos Mensais' },
   { key: 'casa', title: 'Checklist da Casa' },
+  { key: 'documentacao', title: 'Documentação' },
 ];
 
 function App() {
@@ -35,30 +36,28 @@ function App() {
         </div>
       </header>
 
-      <div className="app-body">
-        <Sidebar active={active} onChange={setActive} />
+      <TopNav active={active} onChange={setActive} />
 
-        <main className="content">
-          {loading && <p className="state-msg">Carregando dados...</p>}
-          {error && <p className="state-msg state-error">Erro ao carregar dados: {error}</p>}
+      <main className="content">
+        {loading && <p className="state-msg">Carregando dados...</p>}
+        {error && <p className="state-msg state-error">Erro ao carregar dados: {error}</p>}
 
-          {!loading && !error && (
-            <AnimatePresence mode="wait">
-              <SectionView
-                key={active}
-                sectionKey={active}
-                title={activeMeta.title}
-                subtitle={activeMeta.subtitle}
-                items={itemsBySection(active)}
-                onToggle={toggleChecked}
-                onUpdateValue={updateValue}
-                onDelete={deleteItem}
-                onAdd={addItem}
-              />
-            </AnimatePresence>
-          )}
-        </main>
-      </div>
+        {!loading && !error && (
+          <AnimatePresence mode="wait">
+            <SectionView
+              key={active}
+              sectionKey={active}
+              title={activeMeta.title}
+              subtitle={activeMeta.subtitle}
+              items={itemsBySection(active)}
+              onToggle={toggleChecked}
+              onUpdateValue={updateValue}
+              onDelete={deleteItem}
+              onAdd={addItem}
+            />
+          </AnimatePresence>
+        )}
+      </main>
     </div>
   );
 }

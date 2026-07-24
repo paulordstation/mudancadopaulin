@@ -1,4 +1,4 @@
-export type SectionKey = 'viagem' | 'gastos_fixos' | 'casa';
+export type SectionKey = 'viagem' | 'gastos_fixos' | 'casa' | 'documentacao';
 
 export interface ChecklistItem {
   id: string;
