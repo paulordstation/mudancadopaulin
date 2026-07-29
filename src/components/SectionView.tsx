@@ -28,6 +28,10 @@ export function SectionView({
 }: SectionViewProps) {
   const showValue = sectionKey !== 'documentacao';
   const total = items.reduce((sum, item) => sum + item.estimated_value, 0);
+  const spent = items
+    .filter((item) => item.is_checked)
+    .reduce((sum, item) => sum + item.estimated_value, 0);
+  const remaining = total - spent;
   const checkedCount = items.filter((item) => item.is_checked).length;
   const percent = items.length ? (checkedCount / items.length) * 100 : 0;
 
@@ -52,8 +56,9 @@ export function SectionView({
         </div>
         {showValue && (
           <div className="section-total">
-            <span className="section-total-label">Total da seção</span>
-            <span className="section-total-value">{formatCurrency(total)}</span>
+            <span className="section-total-label">Falta investir</span>
+            <span className="section-total-value">{formatCurrency(remaining)}</span>
+            <span className="section-total-spent">{formatCurrency(spent)} investido</span>
           </div>
         )}
       </header>
