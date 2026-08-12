@@ -3,6 +3,7 @@ import type { ChecklistItem, NewChecklistItem, SectionKey } from '../types';
 import { ChecklistItemRow } from './ChecklistItemRow';
 import { AddItemForm } from './AddItemForm';
 import { ProgressBar } from './ProgressBar';
+import SplitText from './SplitText/SplitText';
 import { formatCurrency } from '../utils/format';
 
 interface SectionViewProps {
@@ -51,7 +52,17 @@ export function SectionView({
     >
       <header className="section-header">
         <div>
-          <h2>{title}</h2>
+          <SplitText
+            key={title}
+            text={title}
+            tag="h2"
+            textAlign="left"
+            splitType="chars"
+            delay={30}
+            duration={0.8}
+            from={{ opacity: 0, y: 20 }}
+            to={{ opacity: 1, y: 0 }}
+          />
           {subtitle && <p className="section-subtitle">{subtitle}</p>}
         </div>
         {showValue && (
@@ -72,7 +83,18 @@ export function SectionView({
 
       {grouped.map(({ category, items: catItems }) => (
         <div key={category} className="category-group">
-          <h3 className="category-title">{category}</h3>
+          <SplitText
+            key={category}
+            text={category}
+            tag="h3"
+            className="category-title"
+            textAlign="left"
+            splitType="chars"
+            delay={20}
+            duration={0.6}
+            from={{ opacity: 0, y: 12 }}
+            to={{ opacity: 1, y: 0 }}
+          />
           <ul className="item-list">
             <AnimatePresence initial={false}>
               {catItems.map((item) => (

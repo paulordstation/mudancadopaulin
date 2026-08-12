@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import Aurora from './components/Aurora/Aurora';
 import { Logo } from './components/Logo';
 import { TopNav } from './components/TopNav';
 import { SectionView } from './components/SectionView';
@@ -22,6 +23,10 @@ function App() {
 
   return (
     <div className="app-shell">
+      <div className="aurora-backdrop">
+        <Aurora colorStops={['#5227FF', '#b63ad9', '#5227FF']} amplitude={1} blend={0.5} />
+      </div>
+
       <header className="topbar">
         <Logo />
       </header>

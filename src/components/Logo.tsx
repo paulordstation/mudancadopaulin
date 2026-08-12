@@ -1,21 +1,24 @@
-import { Plane } from 'lucide-react';
-import { motion } from 'framer-motion';
+import StrokeText from './StrokeText/StrokeText';
 
-export function Logo({ size = 26 }: { size?: number }) {
+export function Logo() {
   return (
     <div className="logo">
-      <span className="logo-icon-wrap">
-        <motion.span
-          className="logo-icon"
-          animate={{ y: [0, -2, 0], rotate: [-2, 2, -2] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Plane size={size} strokeWidth={1.75} />
-        </motion.span>
-      </span>
-      <span className="logo-text">
-        Nova<span className="logo-accent">Rota</span>
-      </span>
+      <StrokeText
+        text="NovaRota"
+        strokeColor="#A78BFA"
+        fillColor="#F8FAFC"
+        strokeWidth={1.4}
+        drawDuration={1.6}
+        fillDelay={0.2}
+        stagger={0.05}
+        ease="power2.out"
+        trigger="mount"
+        fillMode="wipe"
+        fontSize={96}
+        fontWeight={800}
+        letterSpacing={-3}
+        reverse={false}
+      />
     </div>
   );
 }

@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
-
 :root {
-  --bg: #07070c;
-  --bg-elevated: #101018;
+  --bg: #060309;
+  --bg-elevated: #120a1e;
   --card: rgba(255, 255, 255, 0.035);
   --card-border: rgba(255, 255, 255, 0.1);
   --card-border-strong: rgba(255, 255, 255, 0.24);
@@ -54,7 +52,7 @@ body {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Montserrat', system-ui, sans-serif;
+  font-family: 'Sora Variable', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -82,6 +80,38 @@ body::before {
     opacity: 0.55;
   }
   50% {
+    opacity: 1;
+  }
+}
+
+/* ---------- Aurora backdrop ---------- */
+
+.aurora-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.6;
+  mix-blend-mode: screen;
+}
+
+/* ---------- Soft text shadow (global) ---------- */
+
+body {
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+}
+
+h1,
+h2,
+h3 {
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.65);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
 }
@@ -140,18 +170,10 @@ p {
 }
 
 .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  padding: 14px 20px;
-  background: rgba(7, 7, 12, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--card-border);
+  padding: 40px 20px 28px;
 }
 
 .content {
@@ -166,6 +188,7 @@ p {
   color: var(--text-dim);
   padding: 40px 0;
   text-align: center;
+  animation: fade-in 0.6s ease both;
 }
 
 .state-error {
@@ -176,36 +199,14 @@ p {
 
 .logo {
   display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-icon-wrap {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  background: var(--card);
-  border: 1px solid var(--card-border);
+  width: min(80vw, 460px);
+  margin: 0 auto;
 }
 
-.logo-icon {
-  display: flex;
-  color: var(--ice);
-}
-
-.logo-text {
-  font-weight: 800;
-  font-size: 17px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.logo-accent {
-  color: var(--text-dim);
+.logo .stroke-text__svg {
+  overflow: visible;
+  filter: drop-shadow(0 8px 26px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 22px var(--accent-viagem-glow));
 }
 
 /* ---------- Top nav ---------- */
@@ -317,6 +318,9 @@ p {
   font-size: clamp(22px, 4vw, 28px);
   font-weight: 800;
   letter-spacing: -0.3px;
+}
+
+.section-header h2 .split-char {
   background: linear-gradient(135deg, #ffffff, var(--accent));
   -webkit-background-clip: text;
   background-clip: text;
@@ -327,6 +331,7 @@ p {
   color: var(--text-dim);
   font-size: 13px;
   margin-top: 4px;
+  animation: fade-in 0.6s ease both;
 }
 
 .section-total {
@@ -341,12 +346,14 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.6px;
   color: var(--text-faint);
+  animation: fade-in 0.6s ease both;
 }
 
 .section-total-value {
   font-size: 20px;
   font-weight: 700;
   color: var(--accent);
+  animation: fade-in 0.6s ease both;
 }
 
 .section-total-spent {
@@ -355,6 +362,7 @@ p {
   color: var(--success);
   text-shadow: 0 0 8px var(--success-glow);
   margin-top: 2px;
+  animation: fade-in 0.6s ease both;
 }
 
 .section-progress {
@@ -381,6 +389,7 @@ p {
 .progress-label {
   font-size: 12px;
   color: var(--text-faint);
+  animation: fade-in 0.6s ease both;
 }
 
 .category-group {
@@ -486,6 +495,7 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.4px;
   color: var(--text-faint);
+  animation: fade-in 0.6s ease both;
 }
 
 .value-display {
@@ -699,6 +709,7 @@ p {
   font-size: 13px;
   color: var(--text-dim);
   line-height: 1.5;
+  animation: fade-in 0.6s ease both;
 }
 
 .dialog-actions {
@@ -712,7 +723,7 @@ p {
 
 @media (min-width: 768px) {
   .topbar {
-    padding: 18px 32px;
+    padding: 56px 32px 36px;
   }
 
   .content {
