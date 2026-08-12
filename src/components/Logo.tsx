@@ -4,7 +4,7 @@ export function Logo() {
   return (
     <div className="logo">
       <StrokeText
-        text="NovaRota"
+        text="NOVAROTA"
         strokeColor="#A78BFA"
         fillColor="#F8FAFC"
         strokeWidth={1.4}
